@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<style>
+    body{
+        background-color: rgb(248, 228, 228);
+
+    }
+    header{
+
+        background-image:url("https://www.hdwallpaperspulse.com/wp-content/uploads/2016/03/06/grey-car-background.jpeg");
+        background-size:cover;
+        background-position: center;
+        height:300px;
+
+    }
+
+    
+    p{
+        
+        text-align: left;
+
+    }
+    h1{
+        padding-top: 2%;
+        padding-left: 5%;
+        padding-right:10%;
+    }
+    h3{
+        background-color: silver;
+        width:58%;
+        height:10%;
+        border-radius:0 25px 50px 0;
+        padding-top: 2%;
+        padding-bottom: 5%;
+        padding-left:2%;
+        transition: transform 0.3s ease;
+    }
+    h3:hover{
+        transform: scale(1.02);
+    }
+    h6{
+        
+         padding-left: 5%;
+    }
+    h5{
+        text-align: right;
+        padding-left:2%;
+    }
+    .search-bar{
+         padding-left:5%;
+ 
+        outline:none;
+        border: none;
+        opacity: 65%; 
+    }
+    .scroll-wrapper{
+        display:flex;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        width:100vw;
+        height:100vh;
+    }
+    section{
+        min-width: 100vw;
+        height: 100vh;
+        flex-shrink: 0;
+
+    }
+    .vehicle-box{
+        width: 70%;
+      max-width: 800px;
+      background: linear-gradient(to bottom, #e9dada, #d3cbcb);
+      padding: 20px 25px;
+      margin: 50px auto;
+      border-radius: 20px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease;
+       text-wrap: 2%;
+        
+    }
+    .vehicle-box:hover {
+      transform: scale(1.02);
+    }
+    
+.vehicle-name {
+      
+     font-style: italic;
+      font-weight: bold;
+      font-size: 25px;
+      color: #000;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .vehicle-details{
+       font-style: italic;
+      font-size: 15px;
+      color: #333;
+      line-height: 1.6;
+      
+
+    }
+     .vehicle-details .info-row {
+      display: flex;
+      justify-content: flex-start;
+      gap:40px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .vehicle-details .info-label {
+      font-weight: bold;
+      color:#444;
+    }
+
+     .button-container {
+      margin-top: 20px;
+      display: flex;
+      gap: 15px;
+    }
+
+    .btn {
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      font-family: 'Georgia', serif;
+    }
+
+    .btn-book {
+      background-color: #f90909;
+      color: white;
+    }
+
+    .btn-book:hover {
+      background-color: #ff84008d;
+      transform: scale(1.05);
+    }
+
+    .btn-watch {
+      background-color: #e29ed2;
+      color: white;
+    }
+
+    .btn-watch:hover {
+      background-color: #ec971f;
+      transform: scale(1.05);
+    }
+    .book_details-box {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      max-width: 800px;
+      background: linear-gradient(to bottom, #e9dada, #d3cbcb);
+      padding: 20px 25px;
+      margin: 50px auto;
+      border-radius: 20px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease;
+      flex-wrap: wrap; /* Optional: allow wrap on small screens */
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .column label {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .column input {
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    header {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .btn-submit{
+      background:#e29ed2;
+      color:#f90909
+    }
+   .navbar {
+  background-color: #2c3e50;
+  padding: 10px 0;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.navbar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.navbar li {
+  display: inline;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  padding: 8px 12px;
+  transition: color 0.3s ease;
+}
+
+.navbar a i {
+  margin-right: 8px;
+}
+
+.navbar a:hover {
+  color: #f39c12;
+}
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.popup-box {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  width: 350px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.popup-box h3 {
+  margin-bottom: 15px;
+}
+
+.popup-actions button {
+  padding: 8px 15px;
+  margin: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.popup-actions button:first-child {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.popup-actions button:last-child {
+  background-color: #e74c3c;
+  color: white;
+}
+
+</style>
+<html lang="en">
+    <head>
+        <title>
+            Vehicle Rental System
+        </title>
+    </head>
+    
+    <body>
+      
+<nav class="navbar">
+  <ul>
+    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+    <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+    <li><a href="watchlater.html"><i class="fas fa-clock"></i> Watch Later</a></li>
+    <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+  </ul>
+</nav>
+        <header>
+        <p><h1>Rent Cars On Best Price</h1></p>
+        <p>
+            <h6>Welcome to RentRover Vehicle Rental,
+            <br><b>We provide best the quality of cars at affordable prices.</b><br>Always ready to serve your needs for car rental for 24hours</h6></p>
+            <input class= "search-bar" placeholder="Search for Vehicle"></input>
+        </header>
+        <centre>
+        
+        <div class="scroll-wrapper">
+            <section id="home">
+             
+              <form id="Booking" onsubmit="vehicle_listing();return false;">
+                  <div  class="book_details-box">
+                     <p style="font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;font-style: oblique;background:linear-gradient(to bottom rgb(255, 23, 23),#d28f8f);padding: 10px 10px;">Booking Details</p>
+                    <div class="column">
+                    <label>Rent Date</label>
+                    <input id="rentdate" style="font-family: 'Times New Roman', Times, serif;" placeholder="YYYY-MM-DD"></input>
+                    </div> 
+                    <div class="column">
+                    <label>Return Date</label>
+                    <input id="returndate" style="font-family:'Times New Roman', Times, serif;" placeholder="YYYY-MM-DD"></input>
+                    </div>
+                    <div class="column">
+                    <label>Car Type</label>
+                    <input id="vehicle_type" style="font-family: 'Times New Roman', Times, serif;" placeholder="eg.sedan"></input>
+                    </div>
+                    <div class="button-container">
+                    <button class="btn btn-submit" placeholder="Submit">Submit</button>
+                    </div>
+                 </div>
+                 </form>
+              <p>
+                    <h3> Great Pricing,transparent Policies<br>
+                                and more</h3>
+            
+                   <h5>
+                       Get Vehicle on Rent and Enjoy trip with family'n friends<br>
+                       Also you can get it for Business trip's and many more reasons to  go,<br>
+                       We are here to help you with this,
+                   </h5>
+             </p>
+                      <p><h3> Planning your next trip or need a ride for the day? <br>We've got you covered. </h3></p>
+                          <h5>Our vehicle rental platform offers a seamless, reliable, and user-friendly<br> experience—right from browsing the fleet to booking your ideal ride.</h5>
+                             <p><h3>Why Choose Us?</h3>
+                                <h5>Whether you're commuting across town or embarking on a road trip, <br>our system puts convenience and control in your hands. Designed for speed, simplicity, and satisfaction.</h5>
+                      </p>
+              
+                     <p><h3>Real experiences from people who trusted us—and loved it.</h3>
+                    <h5>Over 10k+ people who've used RentRover to hit road with confidence rated postively to us</h5></p>
+            </section>
+              <section id="booking">
+                <h1>Booking Section</h1>
+                  <div id="vehicle-container">
+                    <script src="script.js"></script>
+                    <script>
+                      window.addEventListener('DOMContentLoaded',vehicle_listing)
+                    </script>
+
+                  </div>
+                    
+              </section>
+        </div>
+        </centre>
+        
+<div id="confirmation-popup" class="popup-overlay">
+  <div class="popup-box">
+    <h3>Confirm Booking</h3>
+    <p id="popup-details"></p>
+    <div class="popup-actions">
+      <button onclick="confirmBooking()">Confirm</button>
+      <button onclick="closePopup()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+        
+    </body>
+</html>

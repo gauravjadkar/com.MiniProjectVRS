@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Customer Profile</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #f1f1f1, #d7d7d7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .profile-container {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .profile-image {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 20px;
+      border: 3px solid #007bff;
+    }
+
+    .profile-info h2 {
+      margin: 10px 0;
+      font-size: 22px;
+    }
+
+    .profile-info p {
+      margin: 5px 0;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .logout-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .logout-btn:hover {
+      background-color: #c0392b;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="profile-container">
+    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile Image" class="profile-image" />
+    <div class="profile-info">
+
+      <h2 id="cust-name"></h2>
+      <p  id="cust-id"></p>
+      <p id="cust-phone"></p>
+      <p id="cust-license"></p>
+      <p id="cust-watchlater"></p>
+    </div>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </div>
+
+  <script>
+    // Example: Replace with real fetch request
+    document.addEventListener("DOMContentLoaded", async () => {
+      try {
+        const customerId = localStorage.getItem("customer_id") || 1;
+        const response = await fetch(`http://localhost:8083/api/VehicleRentalSystem/customer/${customerId}`);
+        const data = await response.json();
+
+        document.getElementById("cust-name").textContent = data.cust_name;
+        document.getElementById("cust-id").textContent = "Id: " + data.cust_id;
+        document.getElementById("cust-license").textContent="License No:"+data.license_no;
+        document.getElementById("cust-phone").textContent="Phone No:"+data.phone_no;
+        document.getElementById("cust-watchlater").textContent = "Watch Later: " + (data.watchLater || "None");
+      } catch (err) {
+        console.error("Failed to load profile:", err);
+      }
+    });
+
+    function logout() {
+      localStorage.clear();
+      alert("Logged out successfully!");
+      window.location.href = "register.html"; // Redirect to login page
+    }
+  </script>
+
+</body>
+</html>

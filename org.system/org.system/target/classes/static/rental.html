@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vehicle Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        #vehicle-details {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body onload="vehicle_dash()">
+
+    <h2>Vehicle Details</h2>
+    <div id="vehicle-details">
+        <!-- Vehicle data will be loaded here -->
+    </div>
+
+    <h2>Rental History</h2>
+    <table id="rental-history-table">
+        <thead>
+            <tr>
+                <th>Customer Name</th>
+                <th>Rent Date</th>
+                <th>Return Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rental history will be appended here -->
+        </tbody>
+    </table>
+
+    <script>
+        async function vehicle_dash() {
+            const vehicleId = localStorage.getItem("vehicle_id");
+            if (!vehicleId) {
+                alert("No vehicle ID found. Please login.");
+                return;
+            }
+
+            try {
+                // Fetch vehicle details
+                const resVehicle = await fetch(`http://localhost:8083/api/VehicleRentalSystem/vehicle/${vehicleId}`);
+                const vehicle = await resVehicle.json();
+
+                document.getElementById("vehicle-details").innerHTML = `
+                    <p><strong>Model:</strong> ${vehicle.vehicle_model}</p>
+                    <p><strong>Type:</strong> ${vehicle.vehicle_type}</p>
+                    <p><strong>Seats:</strong> ${vehicle.seats}</p>
+                    <p><strong>RC No:</strong> ${vehicle.rc_no}</p>
+                    <p><strong>Price/Day:</strong> ₹${vehicle.price}</p>
+                `;
+
+                // Fetch rental history
+                const resRentals = await fetch(`http://localhost:8083/api/VehicleRentalSystem/rentals/vehicle/${vehicleId}`);
+                const rentals = await resRentals.json();
+
+                const tbody = document.querySelector("#rental-history-table tbody");
+                tbody.innerHTML = ""; // Clear old rows
+
+                rentals.forEach(rent => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${rent.cust_name || "N/A"}</td>
+                        <td>${rent.rentdate}</td>
+                        <td>${rent.returndate}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+
+            } catch (err) {
+                console.error("Failed to fetch data:", err);
+                alert("Something went wrong while loading the dashboard.");
+            }
+        }
+    </script>
+</body>
+</html>

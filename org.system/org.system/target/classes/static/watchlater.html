@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Watch Later Vehicles</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #2c3e50;
+            padding: 12px 0;
+            text-align: center;
+        }
+
+        .navbar ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .navbar a i {
+            margin-right: 8px;
+        }
+
+        .navbar a:hover {
+            color: #f39c12;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #34495e;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background-color: #2c3e50;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        #watch-later-section {
+            display: none;
+        }
+    </style>
+</head>
+<body onload="viewWatchLater()">
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+            <li><a href="watchlater.html"><i class="fas fa-clock"></i> Watch Later</a></li>
+            <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        </ul>
+    </nav>
+
+    <!-- Watch Later Section -->
+    <div class="container" id="watch-later-section">
+        <h2>Your Watch Later Vehicles</h2>
+        <table id="watch-later-table">
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>Type</th>
+                    <th>Seats</th>
+                    <th>Price/Day</th>
+                    <th>RC No</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Filled by JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- JS Functions -->
+    <script>
+        async function viewWatchLater() {
+            const custId = localStorage.getItem("customer_id");
+            if (!custId) {
+                alert("Please login first.");
+                window.location.href = "register.html";
+                return;
+            }
+
+            try {
+                const res = await fetch(`http://localhost:8083/api/VehicleRentalSystem/watchlater/${custId}`);
+                const vehicles = await res.json();
+
+                const tbody = document.querySelector("#watch-later-table tbody");
+                tbody.innerHTML = "";
+
+                vehicles.forEach(vehicle => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${vehicle.vehicle_model}</td>
+                        <td>${vehicle.vehicle_type}</td>
+                        <td>${vehicle.seats}</td>
+                        <td>₹${vehicle.price}</td>
+                        <td>${vehicle.rc_no}</td>
+                        
+                    `;
+                    tbody.appendChild(row);
+                });
+
+                document.getElementById("watch-later-section").style.display = "block";
+
+            } catch (error) {
+                console.error("Error loading watch later list:", error);
+                alert("Failed to load watch later vehicles.");
+            }
+        }
+
+        function logout() {
+            localStorage.clear();
+            alert("Logged out successfully!");
+            window.location.href = "register.html";
+        }
+    </script>
+
+</body>
+</html>
