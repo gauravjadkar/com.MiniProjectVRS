@@ -347,3 +347,52 @@ async function addToWatchLater(vehicleId) {
         console.error("Error adding to Watch Later:", error);
     }
 }
+let currentRental = null;
+
+function showConfirmationPopup(rental) {
+  currentRental = rental;
+
+  const details = `
+    Vehicle ID: ${rental.vehicle.vehicle_id}<br>
+    Rent Date: ${rental.rentDate}<br>
+    Return Date: ${rental.returnDate}<br>
+    Total Days: ${rental.total_Days}<br>
+    Total Price: ₹${rental.total_Price}
+  `;
+  document.getElementById('popup-details').innerHTML = details;
+  document.getElementById('confirmation-popup').style.display = 'flex';
+}
+
+function closePopup() {
+  currentRental = null;
+  document.getElementById('confirmation-popup').style.display = 'none';
+}
+
+async function confirmBooking() {
+  if (!currentRental) return;
+
+  try {
+    const response = await fetch("http://localhost:8083/api/VehicleRentalSystem/rentals", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(currentRental)
+    });
+
+    if (response.ok) {
+      alert("Vehicle booked successfully!");
+    } else {
+      const errorData = await response.json();
+      console.error("Booking failed:", errorData);
+      alert("Booking failed.");
+    }
+  } catch (error) {
+    console.error("Error confirming booking:", error);
+    alert("Error processing your booking.");
+  } finally {
+    closePopup();
+  }
+}
+
+
